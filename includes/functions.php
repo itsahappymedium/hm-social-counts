@@ -14,7 +14,7 @@ function get_hmsc_count( $url='' ) {
         $url = get_permalink();
     }
 
-    $counts = HMSC\Frontend::get_total_counts( $url );
+    $counts = HMSC\hmsc()->get_total_counts( $url );
 
     if ( isset($counts['total']) ) {
         $count = $counts['total'];
