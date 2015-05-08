@@ -32,7 +32,7 @@ class Base_Social_Network {
         $count_url = $this->build_count_url($url);
 
         // Get the response
-        $response = wp_remote_get( $count_url, $args );
+        $response = wp_remote_get( $count_url );
 
         if ( is_array($response) ) {
             $count = (int) $this->get_count_from_response( $response );
