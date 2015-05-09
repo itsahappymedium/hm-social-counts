@@ -43,6 +43,7 @@ class Social_Counts {
         require_once 'includes/lib/class-pinterest.php';
         require_once 'includes/lib/class-linkedin.php';
         require_once 'includes/class-frontend.php';
+        require_once 'includes/class-shortcodes.php';
         require_once 'includes/functions.php';
     }
 
