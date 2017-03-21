@@ -1,0 +1,8 @@
+{
+  "name": "itsahappymedium/hm-social-counts",
+	"description": "Gathers social share counts from various social networks.",
+	"type": "wordpress-plugin",
+  "require" : {
+    "facebook/graph-sdk" : "~5.0"
+  }
+}

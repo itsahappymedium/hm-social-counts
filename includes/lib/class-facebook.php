@@ -2,26 +2,36 @@
 
 namespace HMSC;
 
+use Facebook\Facebook as FB;
+use Facebook\FacebookRequest;
+use Facebook\FacebookApp;
+
 class Facebook extends Base_Social_Network {
     public function __construct() {
-        $this->base_url = 'https://graph.facebook.com/fql?q=SELECT%20like_count,%20total_count,%20share_count,%20click_count,%20comment_count%20FROM%20link_stat%20WHERE%20url%20=%20%22';
-
         parent::__construct();
     }
 
-    public function build_count_url( $url ) {
-        return $this->base_url . $url . '%22';
-    }
+    public function _get_count_for_url( $url ) {
+        $app_id = '631909236894818';
+        $app_secret = 'd64ea53dad2de6b8014f322e84a3ad74';
+        $token = "$app_id|$app_secret";
 
-    public function get_count_from_response( $response ) {
-        $count = 0;
+        $fb = new FB([
+          'app_id' => $app_id,
+          'app_secret' => $app_secret,
+          'default_graph_version' => 'v2.5',
+        ]);
 
-        if ( $response['response']['message'] === 'OK' ) {
-            $body = json_decode($response['body']);
+        $fb->setDefaultAccessToken("$app_id|$app_secret");
 
-            $count = $body->data[0]->total_count;
+        try {
+            $response = $fb->get('/?id=' . $url);
+
+            $node = $response->getGraphNode();
+
+            return (int) $node['share']['share_count'];
+        } catch ( \Exception $e ) {
+            return $e;
         }
-
-        return $count;
     }
 }

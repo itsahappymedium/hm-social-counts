@@ -4,7 +4,7 @@ namespace HMSC;
 
 class LinkedIn extends Base_Social_Network {
     public function __construct() {
-        $this->base_url = 'http://www.linkedin.com/countserv/count/share?url=';
+        $this->base_url = 'https://www.linkedin.com/countserv/count/share?url=';
 
         parent::__construct();
     }

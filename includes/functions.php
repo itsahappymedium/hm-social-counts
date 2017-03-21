@@ -18,6 +18,7 @@ function get_hmsc_count( $url='' ) {
 
     if ( isset($counts['total']) ) {
         $count = $counts['total'];
+        //$count = print_r($counts);
     }
 
     return $count;

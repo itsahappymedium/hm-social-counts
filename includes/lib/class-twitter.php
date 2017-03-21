@@ -2,6 +2,9 @@
 
 namespace HMSC;
 
+/**
+ * DO NOT USE. This is broken now.
+ */
 class Twitter extends Base_Social_Network {
     public function __construct() {
         $this->base_url = 'http://cdn.api.twitter.com/1/urls/count.json?url=';

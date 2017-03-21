@@ -21,7 +21,7 @@ class Social_Counts {
 
     public function __construct() {
         // One hour by default
-        $this->expiration = 1 * HOUR_IN_SECONDS;
+        $this->expiration = 65 * MINUTE_IN_SECONDS;
     }
 
     /**
@@ -37,13 +37,13 @@ class Social_Counts {
      * @return void
      */
     private function load_files() {
+        require_once 'vendor/autoload.php';
         require_once 'includes/lib/class-base-social-network.php';
         require_once 'includes/lib/class-facebook.php';
         require_once 'includes/lib/class-twitter.php';
         require_once 'includes/lib/class-pinterest.php';
         require_once 'includes/lib/class-linkedin.php';
         require_once 'includes/class-frontend.php';
-        require_once 'includes/class-shortcodes.php';
         require_once 'includes/functions.php';
     }
 
@@ -68,7 +68,6 @@ class Social_Counts {
             // DRY: Put our social network classes in an array
             $social_networks = array(
                 'Facebook',
-                'Twitter',
                 'Pinterest',
                 'LinkedIn',
             );
@@ -99,7 +98,7 @@ class Social_Counts {
             $counts['total'] = $total_count;
 
             // Set the transient so this doesn't have to get called a bunch
-            set_transient( $key, $counts, $this->expiration );
+            // set_transient( $key, $counts, $this->expiration );
         }
 
         return $counts;

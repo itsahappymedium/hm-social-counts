@@ -14,7 +14,7 @@ class Frontend {
 
     /**
      * Get the total counts of a URL over ajax
-     * Must pass a valid $_POST['url'] parameter
+     * Must pass a valid $_POST['postId'] parameter
      *
      * @return void
      */
@@ -22,8 +22,19 @@ class Frontend {
         $data = array();
         $count = 0;
 
-        if ( isset($_POST['url']) ) {
-            $url = esc_url( $_POST['url'] );
+        if ( isset($_POST['postId']) ) {
+            // Grab the post ID
+            $post_id = (int) $_POST['postId'];
+
+            // Get URL from that post ID
+            $url = get_permalink( $post_id );
+
+            if ( ! $url ) {
+                $data['error'] = 'Post ID (' . $post_id . ') could not be found.';
+
+                wp_send_json_error( $data );
+            }
+
             $counts = hmsc()->get_total_counts( $url );
 
             // Set count shortcut from the total value
@@ -36,7 +47,7 @@ class Frontend {
             $data['networks'] = $counts['networks'];
 
             // Send a customized message to be inserted into the DOM
-            $data['count_message'] = $count . ' ' . _n( 'Share', 'Shares', $count );
+            $data['count_message'] = number_format($count) . ' ' . _n( 'Share', 'Shares', $count );
 
             wp_send_json_success( $data );
         } else {
